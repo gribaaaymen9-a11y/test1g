@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .question-section {
+            display: block;
+        }
+
+        .question-section.hidden {
+            display: none;
+        }
+
+        h1 {
+            color: #ff6b9d;
+            font-size: 2em;
+            margin-bottom: 30px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .heart {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .yes-btn {
+            background-color: #ff6b9d;
+            color: white;
+        }
+
+        .yes-btn:hover {
+            background-color: #ff5282;
+            transform: scale(1.1);
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .no-btn {
+            background-color: #95a5a6;
+            color: white;
+            position: absolute;
+        }
+
+        .no-btn:hover {
+            background-color: #7f8c8d;
+        }
+
+        /* Success Section */
+        .success-section {
+            display: none;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .success-section.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-section h2 {
+            color: #ff6b9d;
+            font-size: 2.5em;
+            margin: 20px 0;
+        }
+
+        .success-section p {
+            color: #333;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .photos {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .photos img {
+            max-width: 150px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .music-player {
+            margin: 20px 0;
+        }
+
+        .music-player audio {
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff6b9d;
+            pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .success-section h2 {
+                font-size: 2em;
+            }
+
+            .photos img {
+                max-width: 120px;
+            }
+
+            button {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Question Section -->
+        <div class="question-section" id="questionSection">
+            <div class="heart">💕</div>
+            <h1>Will you be my Valentine?</h1>
+            <div class="buttons">
+                <button class="yes-btn" onclick="showSuccess()">YES</button>
+                <button class="no-btn" id="noBtn" onclick="moveButton()">NO</button>
+            </div>
+        </div>
+
+        <!-- Success Section -->
+        <div class="success-section" id="successSection">
+            <div class="heart">💕</div>
+            <h2>YES! I'm so happy! 🎉</h2>
+
+            <!-- Music Player -->
+            <div class="music-player">
+                <label>🎵 Listen to our song:</label>
+                <audio controls>
+                    <source src="your-song-url-here.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <!-- Photos Section -->
+            <div class="photos" id="photosContainer">
+                <!-- Add your photos here -->
+                <img src="photo1-url.jpg" alt="Us">
+                <img src="photo2-url.jpg" alt="Us">
+            </div>
+
+            <!-- Message -->
+            <p>
+                I'm sorry for not bringing you a gift today. I truly feel bad about it, 
+                because you don't just deserve a simple gift — you deserve the whole world. 
+                You are kind, beautiful, and special in a way that's hard to explain.
+            </p>
+            <p>
+                From the very first moment I saw you at the gym, I felt like I had to talk to you. 
+                There was something about you — your smile, your energy, the way your eyes met mine — 
+                that I knew I would never forget.
+            </p>
+            <p>
+                I still remember that moment, when we first spoke, and how natural everything felt, 
+                like an instant connection, a real vibe. I fell for your kindness, your smile, 
+                and the way you care.
+            </p>
+            <p>
+                That's why I wanted us to spend more time together, even train together, 
+                but life and circumstances didn't always allow it. Maybe, in a way, 
+                that's what brought us closer, and for that I'm grateful.
+            </p>
+            <p>
+                You are everything I could ever ask for, and I want you to know that I truly, 
+                deeply like you. If giving you the time you need to understand your feelings means 
+                that one day we can start a new chapter together, then I am willing to wait — 
+                as long as it takes — because being with you is worth it. 💕
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const questionSection = document.getElementById('questionSection');
+        const successSection = document.getElementById('successSection');
+
+        function moveButton() {
+            // Generate random position
+            const randomX = Math.random() * (window.innerWidth - 150);
+            const randomY = Math.random() * (window.innerHeight - 150);
+
+            // Move the button
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function showSuccess() {
+            // Hide question section
+            questionSection.style.display = 'none';
+
+            // Show success section with animation
+            successSection.classList.add('show');
+
+            // Create confetti effect
+            createConfetti();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-10px';
+                confetti.style.background = ['#ff6b9d', '#ff85ad', '#ffa3c7', '#ffb3d9'][Math.floor(Math.random() * 4)];
+                document.body.appendChild(confetti);
+
+                // Animate confetti falling
+                const duration = Math.random() * 2 + 2;
+                confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(360deg)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    easing: 'ease-in'
+                });
+
+                // Remove confetti after animation
+                setTimeout(() => confetti.remove(), duration * 1000);
+            }
+        }
+
+        // Ensure NO button stays in container on mobile
+        window.addEventListener('resize', function() {
+            // Reset button position if resizing
+            noBtn.style.position = 'relative';
+            noBtn.style.left = '0';
+            noBtn.style.top = '0';
+        });
+    </script>
+</body>
+</html>
